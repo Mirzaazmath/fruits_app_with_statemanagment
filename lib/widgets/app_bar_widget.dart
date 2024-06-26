@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../presentation/cart_screen.dart';
+
 class AppBarWidget extends StatelessWidget  implements PreferredSizeWidget {
   const AppBarWidget({super.key});
 
@@ -44,8 +46,8 @@ class AppBarWidget extends StatelessWidget  implements PreferredSizeWidget {
           children: [
             IconButton(
                 onPressed: () {
-                  // Navigator.of(context).push(
-                  //     MaterialPageRoute(builder: (context) => CartScreen()));
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => const CartScreen()));
                 },
                 icon: Icon(
                   Icons.shopping_bag,
