@@ -4,6 +4,7 @@ import 'package:fruits_app_using_statemanagment/providers/category_provider.dart
 
 import 'package:provider/provider.dart';
 import 'presentation/home_screen.dart';
+import 'providers/add_to_cart_provider.dart';
 import 'providers/internet_provider.dart';
 import 'providers/navbar_provider.dart';
 import 'providers/product_provider.dart';
@@ -31,7 +32,10 @@ class MyApp extends StatelessWidget {
         /// Provider to Handle Product Screen State
         ChangeNotifierProvider(create: (_)=>ProductProvider()),
         /// Provider to Handle Category  State
-        ChangeNotifierProvider(create: (_)=>CategoryProvider())
+        ChangeNotifierProvider(create: (_)=>CategoryProvider()),
+        /// Provider to Handle AddToCart  State
+        ChangeNotifierProvider(create: (_)=>AddToCartProvider()),
+
       ],
 
       child: MaterialApp(

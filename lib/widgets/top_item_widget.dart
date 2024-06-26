@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:fruits_app_using_statemanagment/providers/add_to_cart_provider.dart';
+import 'package:provider/provider.dart';
 
 import '../repository/fruit_data.dart';
+
 class TopItemWidget extends StatelessWidget {
   const TopItemWidget({super.key});
 
@@ -38,7 +41,6 @@ class TopItemWidget extends StatelessWidget {
                           height: 100,
                           width: 100,
                           decoration: BoxDecoration(
-
                               image: DecorationImage(
                                   image: AssetImage(fruitList[i].image),
                                   fit: BoxFit.fill))),
@@ -59,147 +61,102 @@ class TopItemWidget extends StatelessWidget {
                           ],
                         ),
                       ),
-                      GestureDetector(
-                        onTap: () {
-                          // context
-                          //     .read<AddtoCartBLoc>()
-                          //     .addtocartforfirsttime(fruitList[i]);
-                        },
-                        child: Container(
-                          height: 40,
-                          width: 70,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            color: Theme.of(context).primaryColor,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: const Text(
-                            "Add",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      )
-                      // BlocBuilder<AddtoCartBLoc, AddtoCartStates>(
-                      //     builder: (context, state) {
-                      //   if (state is AddtoCartInitalState) {
-                      //     return GestureDetector(
-                      //       onTap: () {
-                      //         context
-                      //             .read<AddtoCartBLoc>()
-                      //             .addtocartforfirsttime(fruitList[i]);
-                      //       },
-                      //       child: Container(
-                      //         height: 40,
-                      //         width: 70,
-                      //         alignment: Alignment.center,
-                      //         decoration: BoxDecoration(
-                      //           color: Theme.of(context).primaryColor,
-                      //           borderRadius: BorderRadius.circular(10),
-                      //         ),
-                      //         child: const Text(
-                      //           "Add",
-                      //           style: TextStyle(
-                      //               color: Colors.white,
-                      //               fontWeight: FontWeight.bold),
-                      //         ),
-                      //       ),
-                      //     );
-                      //   } else {
-                      //     if (addtocartlist.contains(fruitList[i])) {
-                      //       Fruit item = addtocartlist.firstWhere((element) =>
-                      //           element.name == fruitList[i].name);
-                      //       return SizedBox(
-                      //         height: 40,
-                      //         child: Row(
-                      //           mainAxisAlignment: MainAxisAlignment.center,
-                      //           children: [
-                      //             GestureDetector(
-                      //               onTap: () {
-                      //                 context
-                      //                     .read<AddtoCartBLoc>()
-                      //                     .decrement(fruitList[i]);
-                      //               },
-                      //               child: Container(
-                      //                 height: 20,
-                      //                 width: 20,
-                      //                 decoration: BoxDecoration(
-                      //                     color:
-                      //                         Theme.of(context).primaryColor,
-                      //                     borderRadius:
-                      //                         BorderRadius.circular(4)),
-                      //                 child: const Icon(
-                      //                   Icons.remove,
-                      //                   size: 20,
-                      //                   color: Colors.white,
-                      //                 ),
-                      //               ),
-                      //             ),
-                      //             Container(
-                      //               alignment: Alignment.center,
-                      //               height: 20,
-                      //               width: 30,
-                      //               decoration: BoxDecoration(
-                      //                   //color: Theme.of(context).primaryColor,
-                      //                   borderRadius:
-                      //                       BorderRadius.circular(4)),
-                      //               child: Text(
-                      //                 item.units.toString(),
-                      //                 style: const TextStyle(
-                      //                     fontWeight: FontWeight.bold),
-                      //               ),
-                      //             ),
-                      //             GestureDetector(
-                      //               onTap: () {
-                      //                 // context
-                      //                 //     .read<AddtoCartBLoc>()
-                      //                 //     .increament(fruitList[i]);
-                      //               },
-                      //               child: Container(
-                      //                 height: 20,
-                      //                 width: 20,
-                      //                 decoration: BoxDecoration(
-                      //                     color:
-                      //                         Theme.of(context).primaryColor,
-                      //                     borderRadius:
-                      //                         BorderRadius.circular(4)),
-                      //                 child: const Icon(
-                      //                   Icons.add,
-                      //                   size: 20,
-                      //                   color: Colors.white,
-                      //                 ),
-                      //               ),
-                      //             )
-                      //           ],
-                      //         ),
-                      //       );
-                      //     } else {
-                      //       return GestureDetector(
-                      //         onTap: () {
-                      //           // context
-                      //           //     .read<AddtoCartBLoc>()
-                      //           //     .addtocartforfirsttime(fruitList[i]);
-                      //         },
-                      //         child: Container(
-                      //           height: 40,
-                      //           width: 70,
-                      //           alignment: Alignment.center,
-                      //           decoration: BoxDecoration(
-                      //             color: Theme.of(context).primaryColor,
-                      //             borderRadius: BorderRadius.circular(10),
-                      //           ),
-                      //           child: const Text(
-                      //             "Add",
-                      //             style: TextStyle(
-                      //                 color: Colors.white,
-                      //                 fontWeight: FontWeight.bold),
-                      //           ),
-                      //         ),
-                      //       );
-                      //     }
-                      //   }
-                      // })
+                      Consumer<AddToCartProvider>(
+                          builder: (context, provider, widget) {
+                        /// Checking whether the item is in  addToCartList or not
+                        if (!addToCartList.contains(fruitList[i])) {
+                          /// if Not Display Add  Button
+                          return GestureDetector(
+                            onTap: () {
+                              provider.addToCartForFirsTime(fruitList[i]);
+                            },
+                            child: Container(
+                              height: 40,
+                              width: 70,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                color: Theme.of(context).primaryColor,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: const Text(
+                                "Add",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          );
+                        } else {
+                          /// Getting the exact item from addToCartList to display the counter
+                          Fruit item = addToCartList.firstWhere(
+                              (element) => element.name == fruitList[i].name);
+
+                          /// Else show increment and decrement buttons with counter
+                          return SizedBox(
+                            height: 40,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                /// Decrease Button
+                                GestureDetector(
+                                  onTap: () {
+                                    /// Calling  Decrease method
+                                    provider.decreaseUnit(fruitList[i]);
+                                  },
+                                  child: Container(
+                                    height: 25,
+                                    width: 25,
+                                    decoration: BoxDecoration(
+                                        color: Theme.of(context).primaryColor,
+                                        borderRadius: BorderRadius.circular(4)),
+                                    child: const Icon(
+                                      Icons.remove,
+                                      size: 20,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+
+                                /// Counter section
+                                Container(
+                                  alignment: Alignment.center,
+                                  height: 30,
+                                  width: 45,
+                                  decoration: BoxDecoration(
+                                      //color: Theme.of(context).primaryColor,
+                                      borderRadius: BorderRadius.circular(4)),
+                                  child: Text(
+                                    item.units.toString(),
+                                    style: const TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+
+                                /// Increase Button
+                                GestureDetector(
+                                  onTap: () {
+                                    /// Calling Increase Method
+                                    provider.increaseUnit(fruitList[i]);
+                                  },
+                                  child: Container(
+                                    height: 25,
+                                    width: 25,
+                                    decoration: BoxDecoration(
+                                        color: Theme.of(context).primaryColor,
+                                        borderRadius: BorderRadius.circular(4)),
+                                    child: const Icon(
+                                      Icons.add,
+                                      size: 20,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          );
+                        }
+                      })
                     ],
                   ),
                 ),
