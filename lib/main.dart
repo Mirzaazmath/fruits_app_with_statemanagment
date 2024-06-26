@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fruits_app_using_statemanagment/providers/category_provider.dart';
 
 import 'package:provider/provider.dart';
 import 'presentation/home_screen.dart';
@@ -28,7 +29,9 @@ class MyApp extends StatelessWidget {
         /// Provider to Handle Internet State
         ChangeNotifierProvider(create: (_)=>InternetProvider()),
         /// Provider to Handle Product Screen State
-        ChangeNotifierProvider(create: (_)=>ProductProvider())
+        ChangeNotifierProvider(create: (_)=>ProductProvider()),
+        /// Provider to Handle Category  State
+        ChangeNotifierProvider(create: (_)=>CategoryProvider())
       ],
 
       child: MaterialApp(
