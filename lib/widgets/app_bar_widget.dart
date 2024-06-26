@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:fruits_app_using_statemanagment/providers/add_to_cart_provider.dart';
+import 'package:fruits_app_using_statemanagment/repository/fruit_data.dart';
+import 'package:provider/provider.dart';
 
 import '../presentation/cart_screen.dart';
 
@@ -53,17 +56,21 @@ class AppBarWidget extends StatelessWidget  implements PreferredSizeWidget {
                   Icons.shopping_bag,
                   color: Theme.of(context).primaryColor,
                 )),
-            const  Positioned(
+              Positioned(
                 right: 10,
                 top: 10,
-                child: Badge(
-                  label:  Text(
-                    "10",
-                    style:  TextStyle(
-                        color: Colors.white,
-                        fontSize: 10,
-                        fontWeight: FontWeight.bold),
-                  ),
+                child: Consumer<AddToCartProvider>(
+                  builder: (context,provider,widget) {
+                    return  addToCartList.isEmpty?const SizedBox(): Badge(
+                      label:  Text(
+                        addToCartList.length.toString(),
+                        style:  const TextStyle(
+                            color: Colors.white,
+                            fontSize: 10,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    );
+                  }
                 ))
           ],
         ),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fruits_app_using_statemanagment/providers/add_to_cart_provider.dart';
+import 'package:fruits_app_using_statemanagment/providers/place_order_provider.dart';
+import 'package:fruits_app_using_statemanagment/utils/app_enums.dart';
 import 'package:fruits_app_using_statemanagment/widgets/empty_cart_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:collection/collection.dart';
@@ -63,9 +65,7 @@ class CartScreen extends StatelessWidget {
                                   children: [
                                     Text(
                                       addToCartList.elementAt(index).name,
-                                      style: const TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold),
+                                      style: Theme.of(context).textTheme.titleLarge,
                                     ),
                                     RichText(
                                       text: TextSpan(
@@ -84,83 +84,94 @@ class CartScreen extends StatelessWidget {
                                   ],
                                 ),
                               ),
-                              RichText(
-                                text: TextSpan(
-                                  text: '\$',
-                                  style: TextStyle(
-                                      color:
-                                      Theme.of(context).primaryColor),
-                                  children: <TextSpan>[
-                                    TextSpan(
-                                        text:
-                                        "${double.parse((addToCartList.elementAt(index).units! * addToCartList.elementAt(index).price).toStringAsFixed(2))}",
-                                        style: const TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.black)),
-                                  ],
-                                ),
-                              ),
-                              Row(
-                                children: [
-                                  GestureDetector(
-                                    onTap: () {
-                                      provider.decreaseUnit(addToCartList
-                                          .elementAt(index));
-                                    },
-                                    child: Container(
-                                      height: 20,
-                                      width: 20,
-                                      decoration: BoxDecoration(
-                                          color: Theme.of(context)
-                                              .primaryColor,
-                                          borderRadius:
-                                          BorderRadius.circular(4)),
-                                      child: const Icon(
-                                        Icons.remove,
-                                        size: 20,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                    alignment: Alignment.center,
-                                    height: 20,
-                                    width: 30,
-                                    decoration: BoxDecoration(
-                                      //color: Theme.of(context).primaryColor,
-                                        borderRadius:
-                                        BorderRadius.circular(4)),
-                                    child: Text(
-                                      addToCartList
-                                          .elementAt(index)
-                                          .units
-                                          .toString(),
-                                      style: const TextStyle(
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      provider.increaseUnit(addToCartList
-                                          .elementAt(index));
 
-                                    },
-                                    child: Container(
-                                      height: 20,
-                                      width: 20,
-                                      decoration: BoxDecoration(
-                                          color: Theme.of(context)
-                                              .primaryColor,
-                                          borderRadius:
-                                          BorderRadius.circular(4)),
-                                      child: const Icon(
-                                        Icons.add,
-                                        size: 20,
-                                        color: Colors.white,
+                              Column(
+
+                                children: [
+                                  Expanded(
+                                    child: Center(
+                                      child: RichText(
+                                        text: TextSpan(
+                                          text: '\$',
+                                          style: TextStyle(
+                                              color:
+                                              Theme.of(context).primaryColor),
+                                          children: <TextSpan>[
+                                            TextSpan(
+                                                text:
+                                                "${double.parse((addToCartList.elementAt(index).units! * addToCartList.elementAt(index).price).toStringAsFixed(2))}",
+                                                style: const TextStyle(
+                                                    fontSize: 20,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.black)),
+                                          ],
+                                        ),
                                       ),
                                     ),
-                                  )
+                                  ),
+                                  Row(
+                                    children: [
+                                      GestureDetector(
+                                        onTap: () {
+                                          provider.decreaseUnit(addToCartList
+                                              .elementAt(index));
+                                        },
+                                        child: Container(
+                                          height: 25,
+                                          width: 25,
+                                          decoration: BoxDecoration(
+                                              color: Theme.of(context)
+                                                  .primaryColor,
+                                              borderRadius:
+                                              BorderRadius.circular(4)),
+                                          child: const Icon(
+                                            Icons.remove,
+                                            size: 20,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ),
+                                      Container(
+                                        alignment: Alignment.center,
+                                        height: 25,
+                                        width: 45,
+                                        decoration: BoxDecoration(
+                                          //color: Theme.of(context).primaryColor,
+                                            borderRadius:
+                                            BorderRadius.circular(4)),
+                                        child: Text(
+                                          addToCartList
+                                              .elementAt(index)
+                                              .units
+                                              .toString(),
+                                          style: const TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                      GestureDetector(
+                                        onTap: () {
+                                          provider.increaseUnit(addToCartList
+                                              .elementAt(index));
+
+                                        },
+                                        child: Container(
+                                          height: 25,
+                                          width: 25,
+                                          decoration: BoxDecoration(
+                                              color: Theme.of(context)
+                                                  .primaryColor,
+                                              borderRadius:
+                                              BorderRadius.circular(4)),
+                                          child: const Icon(
+                                            Icons.add,
+                                            size: 20,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
                                 ],
                               ),
                             ],
@@ -229,8 +240,10 @@ class CartScreen extends StatelessWidget {
                     ),
                     GestureDetector(
                       onTap: () {
-                       // showLoader(context);
-                       // context.read<PlaceOrderBloc>().placeOrder();
+                        /// Showing Loader
+                        showLoader(context);
+                        /// Calling the place Order Api
+                        context.read<PlaceOrderProvider>().placeOrderApi();
                       },
                       child: Container(
                         alignment: Alignment.center,
@@ -272,62 +285,67 @@ class CartScreen extends StatelessWidget {
     );
   }
 
+  /// Method to Calculate the Total Amount and Return As String
   String getAmountValue() {
-    List<double> totalamount = [];
+    List<double> totalAmount = [];
     for (int i = 0; i < addToCartList.length; i++) {
-      totalamount.add(
+      totalAmount.add(
           addToCartList.elementAt(i).units! * addToCartList.elementAt(i).price);
     }
-
-    return "${double.parse(totalamount.sum.toStringAsFixed(2))}";
+    /// Return value on Strin
+    return "${double.parse(totalAmount.sum.toStringAsFixed(2))}";
   }
 }
 
-// void showLoader(
-//   BuildContext ctx,
-// ) {
-//   showDialog(
-//       context: ctx,
-//       builder: (ctx) {
-//         return BlocBuilder<PlaceOrderBloc, PlaceOrderStates>(
-//             builder: (context, state) {
-//           if (state is PlaceOrderLoadingState) {
-//             return const Center(
-//               child: CircularProgressIndicator(),
-//             );
-//           } else {
-//             return AlertDialog(
-//               title: const Text('Order Placed'),
-//               content: SizedBox(
-//                   height: 100,
-//                   width: 100,
-//                   child: Image.asset("assets/check-circle.gif")),
-//               actions: <Widget>[
-//                 GestureDetector(
-//                   onTap: () {
-//                     context.read<AddtoCartBLoc>().ordered();
-//
-//                     Navigator.of(context).pop();
-//                   },
-//                   child: Container(
-//                     alignment: Alignment.center,
-//                     height: 40,
-//                     width: 100,
-//                     decoration: BoxDecoration(
-//                       color: Theme.of(context).primaryColor,
-//                       borderRadius: BorderRadius.circular(10),
-//                     ),
-//                     child: const Text(
-//                       "Okay",
-//                       style: TextStyle(
-//                           color: Colors.white, fontWeight: FontWeight.bold),
-//                     ),
-//                   ),
-//                 )
-//                 // TextButton(
-//               ],
-//             );
-//           }
-//         });
-//       });
-// }
+void showLoader(
+  BuildContext ctx,
+) {
+  showDialog(
+      context: ctx,
+      builder: (ctx) {
+        return Consumer<PlaceOrderProvider>(
+            builder: (context, provider,widget) {
+              /// Checking the State of the  Api
+          if (provider.placeOrderApiStatus==ApiCallStatus.loading) {
+            /// If its Loading
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          } else {
+            /// If its Success
+            return AlertDialog(
+              backgroundColor: Colors.white,
+              title: const Text('Order Placed'),
+              content: SizedBox(
+                  height: 100,
+                  width: 100,
+                  child: Image.asset("assets/check-circle.gif")),
+              actions: <Widget>[
+                GestureDetector(
+                  onTap: () {
+                    context.read<AddToCartProvider>().placeOrder();
+                    context.read<PlaceOrderProvider>().placeOrderApiReset();
+                    Navigator.of(context).pop();
+                  },
+                  child: Container(
+                    alignment: Alignment.center,
+                    height: 40,
+                    width: 100,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).primaryColor,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: const Text(
+                      "Okay",
+                      style: TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                )
+                // TextButton(
+              ],
+            );
+          }
+        });
+      });
+}

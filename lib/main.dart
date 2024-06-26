@@ -7,6 +7,7 @@ import 'presentation/home_screen.dart';
 import 'providers/add_to_cart_provider.dart';
 import 'providers/internet_provider.dart';
 import 'providers/navbar_provider.dart';
+import 'providers/place_order_provider.dart';
 import 'providers/product_provider.dart';
 void main() async{
   /// Ensuring the Orientation SetUp
@@ -35,6 +36,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_)=>CategoryProvider()),
         /// Provider to Handle AddToCart  State
         ChangeNotifierProvider(create: (_)=>AddToCartProvider()),
+        /// Provider to Handle PlaceOrder  State
+        ChangeNotifierProvider(create: (_)=>PlaceOrderProvider()),
 
       ],
 
@@ -45,7 +48,8 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor:const  Color(0xfffaf6f3),
           cardTheme: const CardTheme(
             color: Colors.white
-          )
+          ),
+
         ),
         home: const HomeScreen(),
       
