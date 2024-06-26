@@ -9,6 +9,7 @@ import 'providers/internet_provider.dart';
 import 'providers/navbar_provider.dart';
 import 'providers/place_order_provider.dart';
 import 'providers/product_provider.dart';
+import 'providers/search_provider.dart';
 void main() async{
   /// Ensuring the Orientation SetUp
   WidgetsFlutterBinding.ensureInitialized();
@@ -38,7 +39,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_)=>AddToCartProvider()),
         /// Provider to Handle PlaceOrder  State
         ChangeNotifierProvider(create: (_)=>PlaceOrderProvider()),
-
+        /// Provider to Handle Search  State
+        ChangeNotifierProvider(create: (_)=>SearchProvider()),
+//SearchProvider
       ],
 
       child: MaterialApp(
