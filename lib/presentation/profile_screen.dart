@@ -29,20 +29,21 @@ class _MyOrderPageState extends State<MyOrderPage> {
                 context,
                 MaterialPageRoute(builder: (context) => DeliveryStatus()),),
               child:Card(
+
                 elevation: 3,
                 child:Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Row(
                       children: [
-                        Container(
+                        SizedBox(
                           height: 80,
                           width: 60,
 
                           child: Image.asset("assets/apple.png",fit: BoxFit.fill,),
 
                         ),
-                        Column(
+                        const Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Padding(
@@ -64,7 +65,10 @@ class _MyOrderPageState extends State<MyOrderPage> {
 
                     ),
 
-                    Icon(Icons.arrow_forward_sharp)
+                    const Padding(
+                    padding:  EdgeInsets.all(8.0),
+                    child:    Icon(Icons.arrow_forward_sharp),
+                  )
 
 
                   ],
@@ -89,8 +93,8 @@ class _DeliveryStatusState extends State<DeliveryStatus> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("My Order",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.white),),
-        backgroundColor: Colors.red,
+        title: const Text("My Order",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+
       ),
       body: SingleChildScrollView(
         child:Column(
@@ -101,13 +105,11 @@ class _DeliveryStatusState extends State<DeliveryStatus> {
               children: [
                 ExpansionPanel(
                   headerBuilder: (BuildContext context, bool isExpanded) {
-                    return ListTile(
+                    return const  ListTile(
                       title: Text('TRACK ORDER',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
                     );
                   },
-                  body: Container(
-                    child: TimeLine(),
-                  ),
+                  body:const  TimeLine(),
                   isExpanded: _expanded,
                   canTapOnHeader: true,
 
@@ -421,7 +423,7 @@ class _DeliveryStatusState extends State<DeliveryStatus> {
 
 class TimeLine extends StatefulWidget {
 
-  const TimeLine({Key? key}) : super(key: key);
+  const TimeLine({super.key});
 
   @override
   _TimeLineState createState() => _TimeLineState();
@@ -434,77 +436,74 @@ class _TimeLineState extends State<TimeLine> {
   @override
   void initState() {
     super.initState();
-    timeline =_getcards();
+    timeline =_getCards();
   }
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: ListView.builder(
-          physics:ClampingScrollPhysics() ,
-          scrollDirection: Axis.vertical,
-          shrinkWrap: true,
-          itemCount: timeline.length,
-          itemBuilder: (context,index){
-            return Container(
-              child: Row(
+    return ListView.builder(
+        physics:const ClampingScrollPhysics() ,
+        scrollDirection: Axis.vertical,
+        shrinkWrap: true,
+        itemCount: timeline.length,
+        itemBuilder: (context,index){
+          return Row(
+            children: [
+              Column(
                 children: [
-                  Column(
-                    children: [
-                      Container(
-                        width: 2,
-                        height: 50,
-                        color:index==0? Colors.white: Colors.black,
+                  Container(
+                    width: 2,
+                    height: 50,
+                    color:index==0? Colors.white: Colors.black,
 
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(left: 5,right: 5),
-                        padding: EdgeInsets.all(5),
-                        decoration: BoxDecoration(
-                          color: Colors.red,
-                          borderRadius: BorderRadius.circular(50),
-                        ),
-                        child: Icon(Icons.check,color: Colors.white,),
-                      ),
-                      Container(
-                        width: 2,
-                        height: 50,
-                        color:index==timeline.length-1? Colors.white: Colors.black,
-
-                      ),
-                    ],
                   ),
-                  Expanded(
-                      child: Container(
-                        margin: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            border: Border(top: BorderSide(width: 4,color: Colors.red)),
-                            boxShadow:[ BoxShadow(
-                              blurRadius:10,
-                              color: Colors.black26,
-                            )]
-                        ),
-                        height: 100,
-                        child: Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(timeline[index].title,style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-                              Text(timeline[index].descripton,style: TextStyle(fontSize: 16,),),
+                  Container(
+                    margin: const EdgeInsets.only(left: 5,right: 5),
+                    padding:const  EdgeInsets.all(5),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).primaryColor,
+                      borderRadius: BorderRadius.circular(50),
+                    ),
+                    child:const  Icon(Icons.check,color: Colors.white,),
+                  ),
+                  Container(
+                    width: 2,
+                    height: 50,
+                    color:index==timeline.length-1? Colors.white: Colors.black,
 
-                            ],
-                          ),
-                        ),
-                      )),
-
+                  ),
                 ],
               ),
-            );
-          }),
-    );
+              Expanded(
+                  child: Container(
+                    margin:const  EdgeInsets.all(10),
+                    decoration:  BoxDecoration(
+                        color: Colors.white,
+                        border: Border(top: BorderSide(width: 4,color: Theme.of(context).primaryColor)),
+                        boxShadow:const [
+                          BoxShadow(
+                          blurRadius:10,
+                          color: Colors.black26,
+                        )]
+                    ),
+                    height: 100,
+                    child: Padding(
+                      padding:const  EdgeInsets.all(8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(timeline[index].title,style:const TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+                          Text(timeline[index].description,style:const  TextStyle(fontSize: 16,),),
+
+                        ],
+                      ),
+                    ),
+                  )),
+
+            ],
+          );
+        });
   }
-  List<TimeLineCard>_getcards(){
+  List<TimeLineCard>_getCards(){
     List<TimeLineCard>timelineCard =[];
     timelineCard.add(TimeLineCard("OrderPlaced", "The order is placed please wait .." ));
     timelineCard.add(TimeLineCard("Packing", "packing has stared " ));
@@ -516,9 +515,9 @@ class _TimeLineState extends State<TimeLine> {
 }
 class TimeLineCard{
   String title;
-  String descripton;
+  String description;
 
-  TimeLineCard(this.title,this.descripton,);
+  TimeLineCard(this.title,this.description,);
 }
 class purchase extends StatefulWidget {
   const purchase({Key? key}) : super(key: key);
@@ -531,9 +530,8 @@ class _purchaseState extends State<purchase> {
   @override
   Widget build(BuildContext context) {
     return
-      Container(
+      SizedBox(
         height: 120,
-
         child:Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children:[
@@ -542,7 +540,7 @@ class _purchaseState extends State<purchase> {
                 child:
                 ListView.separated(
                     separatorBuilder: (BuildContext context, int index) {
-                      return SizedBox(
+                      return const SizedBox(
                         width:10,
                       );
                     },
@@ -564,12 +562,12 @@ class _purchaseState extends State<purchase> {
                                 child:Container(
                                   height:80,
                                   width: 80,
-                                  decoration:BoxDecoration(
+                                  decoration:const BoxDecoration(
                                     shape: BoxShape.circle,
                                     image: DecorationImage(
 
                                       image:
-                                      AssetImage("assets/images/delivery.png"),fit: BoxFit.fill,
+                                      AssetImage("assets/apple.png"),fit: BoxFit.fill,
                                     ),
                                   ),
                                   /*  child:  Image(image: AssetImage(a3[index]),fit: BoxFit.fill,
@@ -578,7 +576,7 @@ class _purchaseState extends State<purchase> {
                               ),
 
 
-                              Text("product")
+                              const Text("product")
                             ]);
 
 
