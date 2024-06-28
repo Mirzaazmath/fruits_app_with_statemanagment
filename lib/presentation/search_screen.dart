@@ -5,12 +5,27 @@ import 'package:provider/provider.dart';
 import '../providers/add_to_cart_provider.dart';
 import '../repository/fruit_data.dart';
 
-class SearchScreen extends StatelessWidget {
+class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
 
   @override
+  State<SearchScreen> createState() => _SearchScreenState();
+}
+
+class _SearchScreenState extends State<SearchScreen> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<SearchProvider>(context,listen: false).searchProduct("");
+    });
+
+
+  }
+  @override
   Widget build(BuildContext context) {
-    context.read<SearchProvider>().searchProduct("");
+
     return Column(
       children: [
         Container(
