@@ -47,6 +47,6 @@ List<Widget> screens = const [
   ProductScreen(),
   SearchScreen(),
   LocationScreen(),
-  //ProfileScreen(),
-  MyOrderPage()
+  ProfileScreen(),
+
 ];
